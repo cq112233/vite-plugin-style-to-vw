@@ -15,7 +15,7 @@ or
 yarn add vite-plugin-style-to-vw -D
 ```
 
-## 使用
+## 使用 必须写在vue()前面
 
 vite.config.js
 
