@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-style-to-vw",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "一个可以将签内样式px转换vw的plugin",
   "exports": {
     ".": {
@@ -21,7 +21,15 @@
     "px",
     "px-to-vw",
     "style-to-vw-plugin",
-    "style-px-to-vw"
+    "style-px-to-vw",
+    "vite-px-to-vw",
+    "vite-style-to-vw",
+    "vite-style-px-to-vw",
+    "vite-style-to-vw-plugin",
+    "vite-style-px-to-vw-plugin",
+    "vite-style-to-vw-plugin",
+    "vite-style-px-to-vw-plugin",
+    "vite-style-px-to-vw-plugin"
   ],
   "repository": {
     "type": "git",
