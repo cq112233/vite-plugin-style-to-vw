@@ -1,0 +1,40 @@
+{
+  "name": "vite-plugin-style-to-vw",
+  "version": "1.0.0",
+  "description": "一个可以将vue3标签内样式px转换vw的plugin",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm",
+    "test": "cd examples/my-vue-app && pnpm run dev"
+  },
+  "keywords": [
+    "vite-plugin-style-to-vw",
+    "style-to-vw",
+    "vite-plugin",
+    "style",
+    "vw"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cq112233/vite-plugin-style-to-vw.git"
+  },
+  "author": "cq",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.14.0",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "eslint": "^8.34.0",
+    "tsup": "^6.6.3",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.4"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}
