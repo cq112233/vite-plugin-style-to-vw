@@ -52,7 +52,7 @@ function createPxReplace(viewportSize, minPixelValue, unitPrecision, viewportUni
   };
 }
 var templateReg = /<template>([\s\S]+)<\/template>/gi;
-var pxGlobalReg = /(\d+)px/gi;
+var pxGlobalReg = /(\d+)px/;
 var styleRegex = /style\s*=\s*(?:"([^"]*?)"|'([^']*?)'|{([^}]*)})/g;
 function vitePluginStyleToVW(customOptions = defaultsProp) {
   return {

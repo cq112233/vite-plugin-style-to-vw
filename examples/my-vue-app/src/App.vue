@@ -1,28 +1,24 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.tsx'
+import A from './components/a.vue'
 </script>
 
 <template>
   <div>
-    <div style="width: 100%; height: 50px; background-color: red"></div>
-    <div style='width: 100%;
-    height: 100px; 
-    background-color: yellow'></div>
-    <div :style="{
-      width: '375px',
+    <h3 style="font-size: 28px;margin-top: 10px;width:500px">Test</h3>
 
+<h3 style="
+    font-size: 28px;
+    margin-top: 10px;
+    width:500px;">
+    Test</h3>
 
-      fontSize: '32px',
-
-
-      
-      height: '100px',
-      backgroundColor: 'blue'
-    }">
-
-    </div>
+<h3 
+  :style="{fontSize:'28px',marginTop: '10px'}">
+Test</h3>
   </div>
   <HelloWorld msg="tsx" />
+  <A/>
 </template>
 
 <style scoped>

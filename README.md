@@ -1,6 +1,6 @@
 # vite-plugin-style-to-vw
 
-一个可以将 Vue3 标签内样式 px 转换 vw 的 plugin
+一个可以将 标签内样式 px 转换 vw 的 plugin
 
 
 ## 安装
@@ -47,32 +47,75 @@ export default defineConfig({
 
 ## 示例
 
-### 可以输入
+### vue 文件
 
-```html
-<h3 style="font-size: 28px;margin-top: 10px" width="500px">Test</h3>
+```
+  // 一行写法
+  <h3 style="font-size: 28px;margin-top: 10px;width:500px">Test</h3>
 
-<h3 style="
-font-size: 28px;
-margin-top: 10px";
-width:500px">Test</h3>
-
-<h3 
-  :style="{font-size:'28px';margin-top: '10px'}">
-Test</h3>
-
-<h3 
-  style={{font-size:'28px';margin-top: '10px'}}>
-Test</h3>
+  // 换行写法
+  <h3 style="
+    font-size: 28px;
+    margin-top: 10px;
+    width:500px;">
+    Test</h3>
+    
+  // 对象写法
+  <h3 
+  :style="{fontSize:'28px',marginTop: '10px'}">
+  Test</h3>
 ```
 
 ### 输出
 
 ```html
-<h3 width="66.66667vw" style="font-size: 3.73333vw; margin-top: 1.33333vw;">
-  Test
-</h3>
+  // 一行写法
+  <h3 style="font-size: 3.73333ww;margin-top: 1.33333vw;width:66.6667vw">Test</h3>
+
+  // 换行写法
+  <h3 style="
+    font-size: 3.73333ww;
+    margin-top: 1.33333vw;
+    width:66.6667vw">
+    Test</h3>
+    
+  // 对象写法
+  <h3 
+  style="font-size: 3.73333ww;margin-top: 1.33333vw；">
+  Test</h3>
 ```
+
+# 也支持tsx,jsx 文件
+### 输入
+```
+<h3 
+  style={{font-size:'28px';margin-top: '10px'}}>
+  Test</h3>
+
+<h3 
+  style=
+  {{font-size:'28px';
+  margin-top: '10px'}}
+  >
+  Test</h3>
+```
+
+### 输出
+```
+<h3 
+  style="font-size: 3.73333ww;margin-top: 1.33333vw；">
+  Test</h3>
+
+<h3 
+  style="font-size: 3.73333ww;margin-top: 1.33333vw；"
+  >
+  Test</h3>
+```
+
+### 如果你不想转换 请用PX代替
+
+```
+
 
 ## 配置参数
 
