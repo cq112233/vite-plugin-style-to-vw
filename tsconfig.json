@@ -5,13 +5,15 @@
     "moduleResolution": "node",
     "strict": true,
     "declaration": true,
+    "declarationMap": true,
     "noUnusedLocals": true,
     "esModuleInterop": true,
     "outDir": "dist",
     "lib": ["ESNext"],
     "sourceMap": false,
     "noEmitOnError": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "types": ["./src/index.d.ts","dist"]
   },
   "include": ["src/*", "*.d.ts"],
   "exclude": ["node_modules", "examples", "dist"]

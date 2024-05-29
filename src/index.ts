@@ -1,11 +1,4 @@
-interface IdefaultsProp {
-  unitToConvert: string,
-  viewportWidth: number,
-  unitPrecision: number,
-  viewportUnit: string,
-  fontViewportUnit: string,
-  minPixelValue: number,
-}
+import type { IdefaultsProp,VitePluginStyleToVw } from 'vite-plugin-style-to-vw'
 
 // 默认参数
 const defaultsProp: IdefaultsProp = {
@@ -43,7 +36,7 @@ const templateReg = /<template>([\s\S]+)<\/template>/gi;
 const pxGlobalReg = /(\d+)px/g;
 const styleRegex = /style\s*(:|=)\s*(?:"([^"]*?)"|'([^']*?)'|{([^}]*)})/g;
 
-function vitePluginStyleToVW(customOptions: IdefaultsProp = defaultsProp) {
+const vitePluginStyleToVw :VitePluginStyleToVw = (customOptions: IdefaultsProp = defaultsProp)=> {
   return {
     // 插件名称
     name: "vite-plugin-style-to-vw",
@@ -137,7 +130,7 @@ function vitePluginStyleToVW(customOptions: IdefaultsProp = defaultsProp) {
 
 
 
-export default vitePluginStyleToVW;
+export default vitePluginStyleToVw;
 
 
 
