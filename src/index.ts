@@ -25,9 +25,10 @@ function createPxReplace(
   viewportUnit: any
 ) {
   return function ($0:any, $1:any) {
-    if (!$1) return;
+    $1 = Number($1)
+    if (!$1) return $0;
     const pixels = parseFloat($1);
-    if (pixels <= minPixelValue) return;
+    if (pixels <= minPixelValue) return $0;
     return toFixed((pixels / viewportSize) * 100, unitPrecision) + viewportUnit;
   };
 }
@@ -65,6 +66,7 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
               const styleValue = styleMatches[i]
 
               const newStyleValue = styleValue.replace(pxGlobalReg, (match) => {
+                // console.log('match',match)
                 return match.replace(
                   pxGlobalReg,
                   createPxReplace(
@@ -75,14 +77,17 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
                   ),
                 )
               })
+              // console.log('newStyleValue',newStyleValue)
               newStyleValues.push(newStyleValue)
             }
+            // console.log('styleMatches',newStyleValues)
             // 将新的 style 属性值替换回原始字符串
             let newStr = _source
             for (let i = 0; i < styleMatches.length; i++) {
               newStr = newStr.replace(styleMatches[i], `${newStyleValues[i]}`)
             }
             code = code.replace(_sourceCopy, newStr)
+      
           }
          
       
