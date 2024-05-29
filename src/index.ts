@@ -41,7 +41,7 @@ function createPxReplace(
 
 const templateReg = /<template>([\s\S]+)<\/template>/gi;
 const pxGlobalReg = /(\d+)px/g;
-const styleRegex = /style\s*=\s*(?:"([^"]*?)"|'([^']*?)'|{([^}]*)})/g;
+const styleRegex = /style\s*(:|=)\s*(?:"([^"]*?)"|'([^']*?)'|{([^}]*)})/g;
 
 function vitePluginStyleToVW(customOptions: IdefaultsProp = defaultsProp) {
   return {

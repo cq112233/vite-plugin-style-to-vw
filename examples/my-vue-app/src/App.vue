@@ -5,7 +5,9 @@ import A from './components/a.vue'
 
 <template>
   <div>
-    <h3 style="font-size: 28px;margin-top: 10px;width:500px">Test</h3>
+    <h3 style="font-size: 28px;margin-top: 10px;width:500px" class="mt-[20px]" :style="{
+      width:'1000px'
+      }">Test</h3>
 
 <h3 style="
     font-size: 28px;
