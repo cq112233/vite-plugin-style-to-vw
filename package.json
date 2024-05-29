@@ -29,7 +29,15 @@
     "vite-style-px-to-vw-plugin",
     "vite-style-to-vw-plugin",
     "vite-style-px-to-vw-plugin",
-    "vite-style-px-to-vw-plugin"
+    "vite-style-px-to-vw-plugin",
+    "vite-react-style-to-vw",
+    "vite-react-style-to-vw",
+    "vite-react-px-to-vw",
+    "vite-react-style-to-vw-plugin",
+    "vite-react-style-px-to-vw-plugin",
+    "vite-react-style-to-vw-plugin",
+    "vite-react-style-to-vw-plugin",
+    "vite-react-style-to-vw-plugin"
   ],
   "repository": {
     "type": "git",
