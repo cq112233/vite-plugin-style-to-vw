@@ -1,4 +1,4 @@
-import type { IdefaultsProp,VitePluginStyleToVw } from 'vite-plugin-style-to-vw'
+import type { IdefaultsProp,VitePluginStyleToVw } from './index.d'
 
 // 默认参数
 const defaultsProp: IdefaultsProp = {
