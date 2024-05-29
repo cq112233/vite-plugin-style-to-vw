@@ -7,6 +7,4 @@ interface IdefaultsProp {
   minPixelValue: number,
 }
 
- type VitePluginStyleToVw = (options?: IdefaultsProp)=>any
-
-export { IdefaultsProp, VitePluginStyleToVw, VitePluginStyleToVw as default };
+export { IdefaultsProp };

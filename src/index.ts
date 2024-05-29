@@ -1,4 +1,4 @@
-import type { IdefaultsProp,VitePluginStyleToVw } from './index.d'
+import type { IdefaultsProp } from './index.d'
 
 // 默认参数
 const defaultsProp: IdefaultsProp = {
@@ -36,7 +36,7 @@ const templateReg = /<template>([\s\S]+)<\/template>/gi;
 const pxGlobalReg = /(\d+)px/g;
 const styleRegex = /style\s*(:|=)\s*(?:"([^"]*?)"|'([^']*?)'|{([^}]*)})/g;
 
-const vitePluginStyleToVw :VitePluginStyleToVw = (customOptions: IdefaultsProp = defaultsProp)=> {
+function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
   return {
     // 插件名称
     name: "vite-plugin-style-to-vw",

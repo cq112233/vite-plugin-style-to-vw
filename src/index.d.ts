@@ -1,3 +1,4 @@
+import { Plugin } from "vite";
 export interface IdefaultsProp {
   unitToConvert: string,
   viewportWidth: number,
@@ -7,6 +8,5 @@ export interface IdefaultsProp {
   minPixelValue: number,
 }
 
- export type VitePluginStyleToVw = (options?: IdefaultsProp)=>any
-
- export default VitePluginStyleToVw
+declare function vitePluginStyleToVw (options?: IdefaultsProp): Plugin;
+ 
