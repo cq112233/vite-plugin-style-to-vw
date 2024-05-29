@@ -8,5 +8,7 @@ export interface IdefaultsProp {
   minPixelValue: number,
 }
 
-declare function vitePluginStyleToVw (options?: IdefaultsProp): Plugin;
+export default function vitePluginStyleToVw(options?:IdefaultsProp):Plugin
+
+
  
