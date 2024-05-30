@@ -24,7 +24,7 @@ function createPxReplace(
   unitPrecision: number,
   viewportUnit: any
 ) {
-  return function ($0:any, $1:any) {
+  return function ($0: any, $1: any) {
     $1 = Number($1)
     if (!$1) return $0;
     const pixels = parseFloat($1);
@@ -42,7 +42,7 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
     // 插件名称
     name: "vite-plugin-style-to-vw",
     // 构建阶段的通用钩子：在每个传入模块请求时被调用：在每个传入模块请求时被调用，主要是用来转换单个模块
-    transform(code:any, id:any) {
+    transform(code: any, id: any) {
       customOptions = Object.assign(defaultsProp, customOptions)
       if (/.vue$/.test(id)) {
         let _source = ''
@@ -51,17 +51,17 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
         if (templateReg.test(code)) {
           _source = code.match(templateReg)[0]
           _sourceCopy = code.match(templateReg)[0]
-        } else if(code.includes('setup')) {
+        } else if (code.includes('setup')) {
           _source = code
           _sourceCopy = code
         }
         if (styleRegex.test(_source)) {
 
           const styleMatches = _source.match(styleRegex) as string[]
-    
-          if(styleMatches?.length) {
+
+          if (styleMatches?.length) {
             // 遍历每个 style 属性值,替换 px 为 vw
-            const newStyleValues:string[] = []
+            const newStyleValues: string[] = []
             for (let i = 0; i < styleMatches.length; i++) {
               const styleValue = styleMatches[i]
 
@@ -87,19 +87,19 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
               newStr = newStr.replace(styleMatches[i], `${newStyleValues[i]}`)
             }
             code = code.replace(_sourceCopy, newStr)
-      
+
           }
-         
-      
+
+
         }
-      }else if(/\.tsx|\.jsx$/.test(id)) {
+      } else if (/\.tsx|\.jsx$/.test(id)) {
         const _source = code
         const _sourceCopy = code
         if (styleRegex.test(_source)) {
           const styleMatches = _source.match(styleRegex) as string[]
-          if(styleMatches?.length) {
+          if (styleMatches?.length) {
             // 遍历每个 style 属性值,替换 px 为 vw
-            const newStyleValues:string[] = []
+            const newStyleValues: string[] = []
             for (let i = 0; i < styleMatches.length; i++) {
               const styleValue = styleMatches[i]
 
@@ -123,11 +123,14 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
             }
             code = code.replace(_sourceCopy, newStr)
           }
-         
-      
+
+
         }
       }
-      return { code }
+      return {
+        code,
+        map: null, // Prevent missing sourcemap warning
+      }
     },
 
   };
