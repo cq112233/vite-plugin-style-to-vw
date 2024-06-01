@@ -121,6 +121,35 @@ export default defineConfig({
   
 ```
 
+### react style 添加 !important 生效,请使用以下方式
+```jsx
+import React from 'react'
+import './App.css'
+
+function App() {
+  return (
+    <>
+      <div 
+        style={{
+          height: '100px',
+          width: '100px',
+          backgroundColor: 'blue',
+          paddingBottom: '30px',
+        }}
+        ref={(el) => {
+          if (el) {
+            el.style.setProperty('height', '100px', 'important');
+            el.style.setProperty('width', '100px', 'important');
+            el.style.setProperty('background-color', 'red');
+            el.style.setProperty('padding-bottom', '30px', 'important');
+          }
+        }}>A</div>
+    </>
+  )
+}
+export default App
+```
+
 
 ### 如果你不想转换 请用PX代替
 

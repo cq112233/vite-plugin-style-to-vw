@@ -36,6 +36,7 @@ function createPxReplace(
 const templateReg = /<template>([\s\S]+)<\/template>/gi;
 const pxGlobalReg = /(\d+)px/g;
 const styleRegex = /style\s*(:|=)\s*(?:"([^"]*?)"|'([^']*?)'|{([^}]*)})/g;
+const styleSetPropertyReg = /style.setProperty\(.*\)/g
 
 function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
   return {
@@ -64,9 +65,7 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
             const newStyleValues: string[] = []
             for (let i = 0; i < styleMatches.length; i++) {
               const styleValue = styleMatches[i]
-
               const newStyleValue = styleValue.replace(pxGlobalReg, (match) => {
-                // console.log('match',match)
                 return match.replace(
                   pxGlobalReg,
                   createPxReplace(
@@ -77,10 +76,8 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
                   ),
                 )
               })
-              // console.log('newStyleValue',newStyleValue)
               newStyleValues.push(newStyleValue)
             }
-            // console.log('styleMatches',newStyleValues)
             // 将新的 style 属性值替换回原始字符串
             let newStr = _source
             for (let i = 0; i < styleMatches.length; i++) {
@@ -89,12 +86,11 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
             code = code.replace(_sourceCopy, newStr)
 
           }
-
-
         }
       } else if (/\.tsx|\.jsx$/.test(id)) {
-        const _source = code
-        const _sourceCopy = code
+        let _source = code
+        let _sourceCopy = code
+        // 匹配style
         if (styleRegex.test(_source)) {
           const styleMatches = _source.match(styleRegex) as string[]
           if (styleMatches?.length) {
@@ -102,7 +98,6 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
             const newStyleValues: string[] = []
             for (let i = 0; i < styleMatches.length; i++) {
               const styleValue = styleMatches[i]
-
               const newStyleValue = styleValue.replace(pxGlobalReg, (match) => {
                 return match.replace(
                   pxGlobalReg,
@@ -122,9 +117,38 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
               newStr = newStr.replace(styleMatches[i], `${newStyleValues[i]}`)
             }
             code = code.replace(_sourceCopy, newStr)
+            _sourceCopy = code
+            _source = code
           }
-
-
+        }
+        // react 设置important
+        if(styleSetPropertyReg.test(_source)) {
+          const styleMatches = _source.match(styleSetPropertyReg) as string[]
+          if (styleMatches?.length) {
+            // 遍历每个 style 属性值,替换 px 为 vw
+            const newStyleValues: string[] = []
+            for (let i = 0; i < styleMatches.length; i++) {
+              const styleValue = styleMatches[i]
+              const newStyleValue = styleValue.replace(pxGlobalReg, (match) => {
+                return match.replace(
+                  pxGlobalReg,
+                  createPxReplace(
+                    customOptions.viewportWidth,
+                    customOptions.minPixelValue,
+                    customOptions.unitPrecision,
+                    customOptions.viewportUnit,
+                  ),
+                )
+              })
+              newStyleValues.push(newStyleValue)
+            }
+            // 将新的 style 属性值替换回原始字符串
+            let newStr = _source
+            for (let i = 0; i < styleMatches.length; i++) {
+              newStr = newStr.replace(styleMatches[i], `${newStyleValues[i]}`)
+            }
+            code = code.replace(code, newStr)
+          }
         }
       }
       return {
