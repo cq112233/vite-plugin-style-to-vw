@@ -7,7 +7,7 @@ export default defineComponent({
   },
   setup(props) {
     return () => (
-      <div style={{width: '100%', height: '30px',background:'red' }}>
+      <div style={{width: '100%', height: '30px !important',background:'red' }}>
         <div style="width:100%;
         height:30px;
         background:red;">
