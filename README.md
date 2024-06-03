@@ -163,6 +163,3 @@ export default App
     minPixelValue: 1, // Set the minimum conversion value. If it is 1, only values greater than 1 will be converted.
 }
 ```
-
-Draw lessons from vite-plugin-style-vw-loader
-https://github.com/gitboyzcf/vite-plugin-style-vw-loader

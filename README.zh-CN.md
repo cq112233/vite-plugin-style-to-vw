@@ -167,6 +167,3 @@ export default App
     minPixelValue: 1, // 设置最小的转换数值，如果为 1 的话，只有大于 1 的值会被转换
 }
 ```
-
-借鉴 vite-plugin-style-vw-loader
-https://github.com/gitboyzcf/vite-plugin-style-vw-loader
