@@ -2,6 +2,16 @@
 
 A plugin that can convert intra-tag style px to vw
 
+## Development reasons
+Some plug-ins will convert class='text-20px' in the atomic plug-in class to class='text-2.666666666665vw', so I wrote this plug-in, only convert class =' text-20px 'in style
+
+## Description
+- Support vue,tsx,jsx file input
+- Supported object writing
+- Support in-line and line wrap styles
+- Support for vue3
+- Support for react
+
 ## Language
 
 - [English](https://github.com/cq112233/vite-plugin-style-to-vw/blob/master/README.md)

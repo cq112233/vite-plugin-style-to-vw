@@ -1,6 +1,19 @@
+
 # vite-plugin-style-to-vw
 
 一个可以将 标签内样式 px 转换 vw 的 plugin
+
+## 开发原因
+
+有些插件会将class中原子化插件的中的class='text-20px' 转换为 class='text-2.6666666666666665vw'，所以写了这个插件,只转化style中的
+
+## 说明
+
+- 支持vue,tsx,jsx 文件输入
+- 支持对象写法
+- 支持行内样式和换行样式
+- 支持vue3
+- 支持react
 
 ## 语言
 
