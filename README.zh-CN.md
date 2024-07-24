@@ -3,6 +3,11 @@
 
 一个可以将 标签内样式 px 转换 vw 的 plugin
 
+> 一个可以将 标签内样式 px 转换 vw 的 plugin
+
+[![NPM version](https://img.shields.io/npm/v/vite-plugin-style-to-vw.svg)](https://www.npmjs.com/package/vite-plugin-style-to-vw)
+
+
 ## 开发原因
 
 有些插件会将class中原子化插件的中的class='text-20px' 转换为 class='text-2.6666666666666665vw'，所以写了这个插件,只转化style中的

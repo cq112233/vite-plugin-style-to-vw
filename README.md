@@ -2,6 +2,10 @@
 
 A plugin that can convert intra-tag style px to vw
 
+> A plugin that can convert intra-tag style px to vw
+
+[![NPM version](https://img.shields.io/npm/v/vite-plugin-style-to-vw.svg)](https://www.npmjs.com/package/vite-plugin-style-to-vw)
+
 ## Development reasons
 Some plug-ins will convert class='text-20px' in the atomic plug-in class to class='text-2.666666666665vw', so I wrote this plug-in, only convert class =' text-20px 'in style
 
