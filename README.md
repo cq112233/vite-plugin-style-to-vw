@@ -160,6 +160,32 @@ function App() {
 export default App
 ```
 
+## If you want to use it manually, please use the following method
+```javascript
+
+import { stylePxToVw } from "vite-plugin-style-to-vw";
+
+const a = stylePxToVw(100)
+console.log(a) // 13.3333
+
+const b = stylePxToVw('100')
+console.log(b) // 13.3333
+
+const c = stylePxToVw('100px')
+console.log(c) // 13.3333vw
+
+const d = stylePxToVw('100px', {
+    unitToConvert: "px", // The unit to be converted is "px" by default.
+    viewportWidth: 750, // The viewport width of the design draft, such as 
+    unitPrecision: 0, // Precision retained after unit conversion.
+    viewportUnit: "vw", // Viewport units you want to use.
+    fontViewportUnit: "vw", // Viewport units used by fonts.
+})
+console.log(d) // 13vw
+
+```
+
+
 
 ### If you don't want to switch, please use PX instead.
 

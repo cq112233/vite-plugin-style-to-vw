@@ -32,7 +32,7 @@ function createPxReplace(
     return toFixed((pixels / viewportSize) * 100, unitPrecision) + viewportUnit;
   };
 }
-
+let extraOptions = defaultsProp
 const templateReg = /<template>([\s\S]+)<\/template>/gi;
 const pxGlobalReg = /(\d+)px/g;
 const styleRegex = /style\s*(:|=)\s*(?:"([^"]*?)"|'([^']*?)'|{([^}]*)})/g;
@@ -45,6 +45,7 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
     // 构建阶段的通用钩子：在每个传入模块请求时被调用：在每个传入模块请求时被调用，主要是用来转换单个模块
     transform(code: any, id: any) {
       customOptions = Object.assign(defaultsProp, customOptions)
+      extraOptions = customOptions
       if (/.vue$/.test(id)) {
         let _source = ''
         let _sourceCopy = ''
@@ -165,6 +166,42 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
 export default vitePluginStyleToVw;
 
 
+// 手动转换成vw 100 ==> 13.33333 '100px' ==> '13.33333px
+export const stylePxToVw = (code: string | number,customOptions: IdefaultsProp = extraOptions) => {
+  customOptions = Object.assign(extraOptions, customOptions)
+  if (typeof code === 'number' || (typeof Number(code) === 'number' && !isNaN(Number(code
+  )))) {
+    let returnCode = code.toString().replace(/(\d+)/g, (match) => {
+      return match.replace(
+        /(\d+)/g,
+        createPxReplace(
+          customOptions.viewportWidth,
+          customOptions.minPixelValue,
+          customOptions.unitPrecision,
+          ''
+        ),
+      )
+
+    })
+    if (typeof code === 'number') {
+      return Number(returnCode)
+    } else {
+      return returnCode
+    }
+  } else {
+    return code.toString().replace(pxGlobalReg, (match) => {
+      return match.replace(
+        pxGlobalReg,
+        createPxReplace(
+          customOptions.viewportWidth,
+          customOptions.minPixelValue,
+          customOptions.unitPrecision,
+          customOptions.viewportUnit,
+        ),
+      )
+    })
+  }
+}
 
 
 
