@@ -10,7 +10,15 @@
 
 ## 开发原因
 
-有些插件会将class中原子化插件的中的class='text-20px' 转换为 class='text-2.6666666666666665vw'，所以写了这个插件,只转化style中的
+有些插件会将class中原子化插件的中的class='text-20px' 转换为 class='text-2.6666666666666665vw'，所以写了这个插件,只转化style中的，
+鉴于有些不用原子化插件,又希望全部属性中的px都转换成vw,allReplace 配置选项设置为true即可
+
+```javascript
+
+vitePluginStyleToVw({
+    allReplace:true, 
+})
+```
 
 ## 说明
 
@@ -51,6 +59,7 @@ import vitePluginStyleToVw from "vite-plugin-style-to-vw";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vitePluginStyleToVw({
+        allReplace:false, 
         unitToConvert: "px",
         viewportWidth: 750,
         unitPrecision: 5,
@@ -202,6 +211,7 @@ console.log(d) // 13vw
 
 ```javascript
 {
+    allReplace:false, //是够全部属性替换
     unitToConvert: "px", // 需要转换的单位，默认为"px"
     viewportWidth: 750, // 设计稿的视口宽度,如传入函数，函数的参数为当前处理的文件路径
     unitPrecision: 5, // 单位转换后保留的精度
