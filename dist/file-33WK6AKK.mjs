@@ -1,1 +1,0 @@
-var e=!1,n="px",o=750,l=5,r="vw",a="vw",p=1,v=["size"],w={allReplace:e,unitToConvert:n,viewportWidth:o,unitPrecision:l,viewportUnit:r,fontViewportUnit:a,minPixelValue:p,attributeList:v};export{e as allReplace,v as attributeList,w as default,a as fontViewportUnit,p as minPixelValue,l as unitPrecision,n as unitToConvert,r as viewportUnit,o as viewportWidth};
