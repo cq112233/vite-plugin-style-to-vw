@@ -5,7 +5,7 @@ import vitePluginStyleToVw2 from '../../src/index'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vitePluginStyleToVw2(),
+
     // {
     //   name:'AS',
     //   transform(code, id){
@@ -15,5 +15,11 @@ export default defineConfig({
     //   }
     // },
     
-    react()],
+    react(),
+    vitePluginStyleToVw2({
+      attributeList:['size']
+    })
+  ],
+
+
 })

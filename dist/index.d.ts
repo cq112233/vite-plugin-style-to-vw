@@ -8,6 +8,7 @@ interface IdefaultsProp {
   viewportUnit?: string,
   fontViewportUnit?: string,
   minPixelValue?: number,
+  attributeList?:string[],
 }
 
 declare function vitePluginStyleToVw(options?:IdefaultsProp):Plugin

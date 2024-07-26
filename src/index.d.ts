@@ -7,6 +7,7 @@ export interface IdefaultsProp {
   viewportUnit?: string,
   fontViewportUnit?: string,
   minPixelValue?: number,
+  attributeList?:string[],
 }
 
 export default function vitePluginStyleToVw(options?:IdefaultsProp):Plugin

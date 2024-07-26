@@ -10,7 +10,7 @@ console.log("stylePxToVw('300px')",stylePxToVw('300px',{
 
 <template>
   <div>
-    <h3 style="font-size: 28px;margin-top: 10px;width:500px" class="mt-[20px]" :style="{
+    <h3 size="300px" width="30px" style="font-size: 28px;margin-top: 10px;width:500px" class="mt-[20px]" :style="{
       width:'1000px'
       }">Test</h3>
 
@@ -25,7 +25,7 @@ console.log("stylePxToVw('300px')",stylePxToVw('300px',{
 Test</h3>
   </div>
   <HelloWorld msg="tsx" />
-  <A/>
+  <A size="100px"/>
 </template>
 
 <style scoped>

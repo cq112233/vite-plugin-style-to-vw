@@ -1,4 +1,6 @@
 import './App.css'
+import A from './components/A'
+import { stylePxToVw } from '../../../src/index'
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
             el.style.setProperty('background-color', 'red');
             el.style.setProperty('padding-bottom', '30px', 'important');
           }
-        }}>A</div>
+        }}>
+          <A size={stylePxToVw('100px') as string}></A>
+        </div>
     </>
   )
 }

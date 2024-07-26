@@ -10,6 +10,7 @@ const defaultsProp: IdefaultsProp = {
   viewportUnit: "vw", // 希望使用的视口单位
   fontViewportUnit: "vw", // 字体使用的视口单位
   minPixelValue: 1, // 设置最小的转换数值，如果为 1 的话，只有大于 1 的值会被转换
+  attributeList:[]
 };
 
 
@@ -43,6 +44,49 @@ const pxGlobalReg = /(\d+)px/g;
 const styleRegex = /style\s*(:|=)\s*(?:"([^"]*?)"|'([^']*?)'|{([^}]*)})/g;
 const allReplace = /(\w+)=\s*(?:"([^"]*?)"|'([^']*?)'|{([^}]*)})/g
 const styleSetPropertyReg = /style.setProperty\(.*\)/g
+
+
+const dealAttributeList = (code,attributeList,customOptions)=>{
+  if(Array.isArray(attributeList) && attributeList.length){
+    for (let index = 0; index < attributeList.length; index++) {
+      let copyCode = code
+      const element = attributeList[index];
+      const styleRegex = new RegExp(`${element}\s*(:|=)\s*(?:"([^"]*?)"|'([^']*?)'|{([^}]*)})`,'g')
+
+      const styleMatches = code.match(styleRegex) as string[]
+
+      if (styleMatches?.length) {
+        // 遍历每个 style 属性值,替换 px 为 vw
+        const newStyleValues: string[] = []
+        for (let i = 0; i < styleMatches.length; i++) {
+          const styleValue = styleMatches[i]
+          const newStyleValue = styleValue.replace(pxGlobalReg, (match) => {
+            return match.replace(
+              pxGlobalReg,
+              createPxReplace(
+                customOptions.viewportWidth,
+                customOptions.minPixelValue,
+                customOptions.unitPrecision,
+                customOptions.viewportUnit,
+              ),
+            )
+          })
+          newStyleValues.push(newStyleValue)
+        }
+        // 将新的 style 属性值替换回原始字符串
+        let newStr = code
+        for (let i = 0; i < styleMatches.length; i++) {
+          newStr = newStr.replace(styleMatches[i], `${newStyleValues[i]}`)
+        }
+        code = code.replace(copyCode, newStr)
+      }
+    }
+    console.log('code',code)
+    return code
+  }else {
+    return code
+  }
+}
 
 function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
   // 合并
@@ -103,9 +147,11 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
               newStr = newStr.replace(styleMatches[i], `${newStyleValues[i]}`)
             }
             code = code.replace(_sourceCopy, newStr)
-
           }
+          // 处理属性列表
+         code = dealAttributeList(code,customOptions.attributeList,customOptions)
         }
+        
       } else if (/\.tsx|\.jsx$/.test(id)) {
         let _source = code
         let _sourceCopy = code
@@ -139,6 +185,8 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
             _sourceCopy = code
             _source = code
           }
+          // 处理属性列表
+          code = dealAttributeList(code,customOptions.attributeList,customOptions)
         }
         // react 设置important
         if (styleSetPropertyReg.test(_source)) {
