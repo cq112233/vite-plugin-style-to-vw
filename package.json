@@ -12,7 +12,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsup src/index.ts --dts --format esm --minify --outDir dist",
-    "test": "cd examples/my-vue-app && pnpm run dev"
+    "test": "cd examples/my-vue-app && pnpm i && pnpm run dev"
   },
   "keywords": [
     "vite-plugin-style-to-vw",
