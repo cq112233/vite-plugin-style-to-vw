@@ -9,7 +9,6 @@
       "require": "./dist/index.js"
     }
   },
-  "type": "module",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsup src/index.ts --dts --format esm --minify --outDir dist",
