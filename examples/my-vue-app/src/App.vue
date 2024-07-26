@@ -4,7 +4,7 @@ import A from './components/a.vue'
 import { stylePxToVw } from '../../../src/index'
 
 console.log("stylePxToVw('300px')",stylePxToVw('300px',{
-
+// viewportWidth:750
 }))
 </script>
 
