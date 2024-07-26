@@ -3,7 +3,9 @@ import HelloWorld from './components/HelloWorld.tsx'
 import A from './components/a.vue'
 import { stylePxToVw } from '../../../src/index'
 
-console.log("stylePxToVw('300px')",stylePxToVw('300px'))
+console.log("stylePxToVw('300px')",stylePxToVw('300px',{
+  viewportWidth:1920
+}))
 </script>
 
 <template>

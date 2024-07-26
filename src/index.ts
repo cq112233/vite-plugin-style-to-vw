@@ -182,7 +182,8 @@ export default vitePluginStyleToVw;
 
 if (typeof window !== "undefined") {
   try {
-    extraOptions = await import('./file.json')
+    const json = await import('./file.json')
+    extraOptions = json.default
   } catch (error) {
   }
 }
