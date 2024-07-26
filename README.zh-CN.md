@@ -10,9 +10,21 @@
 
 ## 开发原因
 
-有些插件会将class中原子化插件的中的class='text-20px' 转换为 class='text-2.6666666666666665vw'，所以写了这个插件,只转化style中的，
+有些插件会将class中原子化插件的中的class='text-20px' 转换为 class='text-2.6666666666666665vw'，所以写了这个插件,
+只转化style中的，
+
 鉴于有些不用原子化插件,又希望全部属性中的px都转换成vw,allReplace 配置选项设置为true即可
 
+## 默认处理 style ，也可以添加额外的属性处理，只支持vue,(react不支持，react请搭配stylePxToVw使用)
+```javascript
+
+vitePluginStyleToVw({
+    allReplace:false, 
+    attributeList:['size','height','width'] // Additional properties that can be handled
+})
+
+```
+## 全部处理
 ```javascript
 
 vitePluginStyleToVw({
@@ -66,6 +78,7 @@ export default defineConfig({
         viewportUnit: "vw",
         fontViewportUnit: "vw",
         minPixelValue: 1,
+        attributeList:[] ,
   }), vue()],
 });
 ```
@@ -211,12 +224,13 @@ console.log(d) // 13vw
 
 ```javascript
 {
-    allReplace:false, //是够全部属性替换
+    allReplace:false, //是否全部属性替换
     unitToConvert: "px", // 需要转换的单位，默认为"px"
     viewportWidth: 750, // 设计稿的视口宽度,如传入函数，函数的参数为当前处理的文件路径
     unitPrecision: 5, // 单位转换后保留的精度
     viewportUnit: "vw", // 希望使用的视口单位
     fontViewportUnit: "vw", // 字体使用的视口单位
     minPixelValue: 1, // 设置最小的转换数值，如果为 1 的话，只有大于 1 的值会被转换
+    attributeList:[] , // allReplace 为 false使用, ['width','size','height']
 }
 ```

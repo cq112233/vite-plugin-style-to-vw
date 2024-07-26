@@ -11,6 +11,16 @@ Some plug-ins will convert class='text-20px' in the atomic plug-in class to clas
 
 Since some plug-ins do not need to be atomized and want px in all attributes to be converted to vw, you can set the allReplace configuration option to true
 
+## The default processing style can also be added. Only vue,(react is not supported, please use it with stylePxToVw)
+```javascript
+
+vitePluginStyleToVw({
+    allReplace:false, 
+    attributeList:['size','height','width'] // Additional properties that can be handled
+})
+
+```
+## all processing
 ```javascript
 
 vitePluginStyleToVw({
@@ -64,6 +74,7 @@ export default defineConfig({
         viewportUnit: "vw",
         fontViewportUnit: "vw",
         minPixelValue: 1,
+        attributeList:[]
   }), vue()],
 });
 ```
@@ -207,12 +218,12 @@ console.log(d) // 13vw
 ```javascript
 {
     allReplace :false, // Replace all label attributes
-
     unitToConvert: "px", // The unit to be converted is "px" by default.
     viewportWidth: 750, // The viewport width of the design draft, such as the incoming function, whose parameter is the file path currently processed.
     unitPrecision: 5, // Precision retained after unit conversion.
     viewportUnit: "vw", // Viewport units you want to use.
     fontViewportUnit: "vw", // Viewport units used by fonts.
     minPixelValue: 1, // Set the minimum conversion value. If it is 1, only values greater than 1 will be converted.
+    attributeList:[] , // allReplace is false, ['width','size','height']
 }
 ```
