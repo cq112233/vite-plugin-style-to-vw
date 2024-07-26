@@ -1,7 +1,7 @@
 import { Plugin } from 'vite';
 
 interface IdefaultsProp {
-  allReplace:boolean,
+  allReplace?:boolean,
   unitToConvert?: string,
   viewportWidth?: number,
   unitPrecision?: number,

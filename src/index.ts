@@ -45,7 +45,10 @@ const allReplace = /(\w+)=\s*(?:"([^"]*?)"|'([^']*?)'|{([^}]*)})/g
 const styleSetPropertyReg = /style.setProperty\(.*\)/g
 
 function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
-  customOptions = Object.assign(defaultsProp, customOptions)
+  // 合并
+  const copyDefaultsProp = Object.assign({}, defaultsProp)
+  // 生成自定义
+  customOptions = Object.assign(copyDefaultsProp, customOptions)
   try {
     // 异步写入文件
     fs.writeFileSync(__dirname + '/file.json', JSON.stringify(customOptions), 'utf8');
@@ -182,6 +185,7 @@ export default vitePluginStyleToVw;
 
 if (typeof window !== "undefined") {
   try {
+    // 读取文件，node端生成合并的配置,
     const json = await import('./file.json')
     extraOptions = json.default
   } catch (error) {
@@ -191,7 +195,8 @@ if (typeof window !== "undefined") {
 
 // 手动转换成vw 100 ==> 13.33333 '100px' ==> '13.33333px
 export const stylePxToVw = (code: string | number, customOptions: IdefaultsProp = {}) => {
-  customOptions = Object.assign(extraOptions, customOptions)
+  const copyExtraOptions = Object.assign({}, extraOptions)
+  customOptions = Object.assign(copyExtraOptions, customOptions)
   if (typeof code === 'number' || (typeof Number(code) === 'number' && !isNaN(Number(code
   )))) {
     const returnCode = code.toString().replace(/(\d+)/g, (match) => {
