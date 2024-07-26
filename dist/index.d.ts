@@ -11,4 +11,7 @@ interface IdefaultsProp {
 
 declare function vitePluginStyleToVw(options?:IdefaultsProp):Plugin
 
-export { IdefaultsProp, vitePluginStyleToVw as default };
+
+declare function stylePxToVw(code: number | string ,options?:IdefaultsProp):number | string
+
+export { IdefaultsProp, vitePluginStyleToVw as default, stylePxToVw };
