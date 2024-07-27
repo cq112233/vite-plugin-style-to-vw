@@ -6,29 +6,6 @@ A plugin that can convert intra-tag style px to vw
 
 [![NPM version](https://img.shields.io/npm/v/vite-plugin-style-to-vw.svg)](https://www.npmjs.com/package/vite-plugin-style-to-vw)
 
-## Development reasons
-Some plug-ins will convert class='text-20px' in the atomic plug-in class to class='text-2.666666666665vw', so I wrote this plug-in, only convert class =' text-20px 'in style
-
-Since some plug-ins do not need to be atomized and want px in all attributes to be converted to vw, you can set the allReplace configuration option to true
-
-## The default processing style can also be added. Only vue,(react is not supported, please use it with stylePxToVw)
-```javascript
-
-vitePluginStyleToVw({
-    allReplace:false, 
-    attributeList:['size','height','width'] // Additional properties that can be handled
-})
-
-```
-## all processing
-```javascript
-
-vitePluginStyleToVw({
-    allReplace:true, 
-})
-```
-
-
 ## Description
 - Support vue,tsx,jsx file input
 - Supported object writing
@@ -56,9 +33,7 @@ yarn add vite-plugin-style-to-vw -D
 
 ## Basic use
 
-vite.config.js
-
-### Vue, must be written before vue ()
+### vue example,react is the same
 ```javascript
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
@@ -79,25 +54,27 @@ export default defineConfig({
 });
 ```
 
-### react 
+## Development reasons
+Some plug-ins will convert class='text-20px' in the atomic plug-in class to class='text-2.666666666665vw', so I wrote this plug-in, only convert class =' text-20px 'in style
 
+Since some plug-ins do not need to be atomized and want px in all attributes to be converted to vw, you can set the allReplace configuration option to true
+
+## The default processing style can also be added. Only vue,(react is not supported, please use it with stylePxToVw)
 ```javascript
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import vitePluginStyleToVw from 'vite-plugin-style-to-vw';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    vitePluginStyleToVw(),
-    react()
-  ],
+vitePluginStyleToVw({
+    allReplace:false, 
+    attributeList:['size','height','width'] // Additional properties that can be handled
+})
+
+```
+## all processing
+```javascript
+
+vitePluginStyleToVw({
+    allReplace:true, 
 })
 ```
-
-
-
-## Support for vue,tsx,jsx file import
 
 ### Input 
 ```html

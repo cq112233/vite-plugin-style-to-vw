@@ -7,31 +7,6 @@
 
 [![NPM version](https://img.shields.io/npm/v/vite-plugin-style-to-vw.svg)](https://www.npmjs.com/package/vite-plugin-style-to-vw)
 
-
-## 开发原因
-
-有些插件会将class中原子化插件的中的class='text-20px' 转换为 class='text-2.6666666666666665vw'，所以写了这个插件,
-只转化style中的，
-
-鉴于有些不用原子化插件,又希望全部属性中的px都转换成vw,allReplace 配置选项设置为true即可
-
-## 默认处理 style ，也可以添加额外的属性处理，只支持vue,(react不支持，react请搭配stylePxToVw使用)
-```javascript
-
-vitePluginStyleToVw({
-    allReplace:false, 
-    attributeList:['size','height','width'] // Additional properties that can be handled
-})
-
-```
-## 全部处理
-```javascript
-
-vitePluginStyleToVw({
-    allReplace:true, 
-})
-```
-
 ## 说明
 
 - 支持vue,tsx,jsx 文件输入
@@ -58,11 +33,12 @@ or
 yarn add vite-plugin-style-to-vw -D
 ```
 
+
 ## 使用 
 
 vite.config.js
 
-### vue, 必须写在vue()前面
+### vue示例 ,react同理
 ```javascript
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
@@ -83,22 +59,29 @@ export default defineConfig({
 });
 ```
 
-### react 
+## 开发原因
 
+有些插件会将class中原子化插件的中的class='text-20px' 转换为 class='text-2.6666666666666665vw'，所以写了这个插件,
+只转化style中的，
+
+鉴于有些不用原子化插件,又希望全部属性中的px都转换成vw,allReplace 配置选项设置为true即可
+
+## 默认处理 style ，也可以添加额外的属性处理，只支持vue,(react不支持，react请搭配stylePxToVw使用)
 ```javascript
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import vitePluginStyleToVw from 'vite-plugin-style-to-vw';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    vitePluginStyleToVw(),
-    react()
-  ],
+vitePluginStyleToVw({
+    allReplace:false, 
+    attributeList:['size','height','width'] // Additional properties that can be handled
+})
+
+```
+## 全部处理
+```javascript
+
+vitePluginStyleToVw({
+    allReplace:true, 
 })
 ```
-
 
 
 ## 示例
