@@ -183,6 +183,22 @@ export default App
 ```
 
 ## If you want to use it manually, please use the following method
+### need install vite-plugin-top-level-await
+```
+pnpm add vite-plugin-top-level-await -D
+
+```
+
+```javascript
+import topLevelAwait from "vite-plugin-top-level-await";
+defineConfig({
+  plugins: [topLevelAwait({
+    promiseExportName: '__tla',
+    promiseImportName: (i) => `__tla_${i}`
+  })]
+})
+```
+
 ```javascript
 
 import { stylePxToVw } from "vite-plugin-style-to-vw";
