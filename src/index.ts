@@ -131,10 +131,10 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
                 return match.replace(
                   pxGlobalReg,
                   createPxReplace(
-                    customOptions.viewportWidth,
-                    customOptions.minPixelValue,
-                    customOptions.unitPrecision,
-                    customOptions.viewportUnit,
+                    customOptions.viewportWidth as number,
+                    customOptions.minPixelValue  as number,
+                    customOptions.unitPrecision  as number,
+                    customOptions.viewportUnit as string,
                   ),
                 )
               })
@@ -169,10 +169,10 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
                 return match.replace(
                   pxGlobalReg,
                   createPxReplace(
-                    customOptions.viewportWidth,
-                    customOptions.minPixelValue,
-                    customOptions.unitPrecision,
-                    customOptions.viewportUnit,
+                    customOptions.viewportWidth as number,
+                    customOptions.minPixelValue  as number,
+                    customOptions.unitPrecision  as number,
+                    customOptions.viewportUnit as string,
                   ),
                 )
               })
@@ -205,10 +205,10 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
                 return match.replace(
                   pxGlobalReg,
                   createPxReplace(
-                    customOptions.viewportWidth,
-                    customOptions.minPixelValue,
-                    customOptions.unitPrecision,
-                    customOptions.viewportUnit,
+                    customOptions.viewportWidth as number,
+                    customOptions.minPixelValue  as number,
+                    customOptions.unitPrecision  as number,
+                    customOptions.viewportUnit as string,
                   ),
                 )
               })
@@ -236,9 +236,12 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
 
 export default vitePluginStyleToVw;
 
+// @ts-ignore
 if (typeof window !== "undefined") {
   try {
     // 读取文件，node端生成合并的配置,
+    // ts忽略下文
+    // @ts-ignore
     const json = await import('/node_modules/vite-plugin-style-to-vw/dist/file.json')
     extraOptions = json.default
   } catch (error) {
@@ -256,9 +259,9 @@ export const stylePxToVw = (code: string | number, customOptions: IdefaultsProp 
       return match.replace(
         /(\d+)/g,
         createPxReplace(
-          customOptions.viewportWidth,
-          customOptions.minPixelValue,
-          customOptions.unitPrecision,
+          customOptions.viewportWidth as number,
+          customOptions.minPixelValue  as number,
+          customOptions.unitPrecision  as number,
           ''
         ),
       )
@@ -274,10 +277,10 @@ export const stylePxToVw = (code: string | number, customOptions: IdefaultsProp 
       return match.replace(
         pxGlobalReg,
         createPxReplace(
-          customOptions.viewportWidth,
-          customOptions.minPixelValue,
-          customOptions.unitPrecision,
-          customOptions.viewportUnit,
+          customOptions.viewportWidth as number,
+          customOptions.minPixelValue  as number,
+          customOptions.unitPrecision  as number,
+          customOptions.viewportUnit as string,
         ),
       )
     })

@@ -13,7 +13,7 @@
     "sourceMap": false,
     "noEmitOnError": true,
     "noImplicitAny": false,
-    "types": ["./src/index.d.ts","dist"]
+    "types": ["./src/index.d.ts"]
   },
   "include": ["src/*", "*.d.ts"],
   "exclude": ["node_modules", "examples", "dist"]
