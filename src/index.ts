@@ -81,7 +81,6 @@ const dealAttributeList = (code,attributeList,customOptions)=>{
         code = code.replace(copyCode, newStr)
       }
     }
-    console.log('code',code)
     return code
   }else {
     return code
@@ -95,7 +94,7 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
   customOptions = Object.assign(copyDefaultsProp, customOptions)
   try {
     // 异步写入文件
-    fs.writeFileSync(__dirname + '/file.json', JSON.stringify(customOptions), 'utf8');
+    fs.writeFileSync(process.cwd()+"/node_modules/vite-plugin-style-to-vw/dist/file.json", JSON.stringify(customOptions), 'utf8');
     // console.log('文件写入成功！');
   } catch (error) {
     // console.error('写入文件时出错:', error);
@@ -234,7 +233,7 @@ export default vitePluginStyleToVw;
 if (typeof window !== "undefined") {
   try {
     // 读取文件，node端生成合并的配置,
-    const json = await import('./file.json')
+    const json = await import('/node_modules/vite-plugin-style-to-vw/dist/file.json')
     extraOptions = json.default
   } catch (error) {
   }
