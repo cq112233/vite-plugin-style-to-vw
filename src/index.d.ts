@@ -8,8 +8,8 @@ export interface IdefaultsProp {
   fontViewportUnit?: string,
   minPixelValue?: number,
   attributeList?:string[],
-  include: string | RegExp | (string | RegExp)[],
-  exclude: string | RegExp | (string | RegExp)[]
+  include?: string | RegExp | (string | RegExp)[],
+  exclude?: string | RegExp | (string | RegExp)[]
 }
 
 export default function vitePluginStyleToVw(options?:IdefaultsProp):Plugin
