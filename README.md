@@ -1,8 +1,10 @@
 # vite-plugin-style-to-vw
 
-A plugin that can convert intra-tag style px to vw
+A plugin that can convert intra-tag style px to vw 
 
-> A plugin that can convert intra-tag style px to vw
+> A plugin that can convert intra-tag style px to vw / rem 
+
+## Give me a start if it is easy to use
 
 [![NPM version](https://img.shields.io/npm/v/vite-plugin-style-to-vw.svg)](https://www.npmjs.com/package/vite-plugin-style-to-vw)
 

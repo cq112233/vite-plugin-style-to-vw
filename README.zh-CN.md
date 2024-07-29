@@ -5,6 +5,8 @@
 
 > 一个可以将 标签内样式 px 转换 vw 的 plugin
 
+## 好用的话给个start哦🙏
+
 [![NPM version](https://img.shields.io/npm/v/vite-plugin-style-to-vw.svg)](https://www.npmjs.com/package/vite-plugin-style-to-vw)
 
 ## 说明
