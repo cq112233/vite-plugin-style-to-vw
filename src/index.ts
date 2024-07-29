@@ -1,5 +1,11 @@
 import type { IdefaultsProp } from './index.d'
 import fs from 'fs'
+// import util  from '@rollup/pluginutils'
+let utils
+// @ts-ignore
+if (typeof window === "undefined") {
+  utils = await import('@rollup/pluginutils')
+}
 
 // 默认参数
 const defaultsProp: IdefaultsProp = {
@@ -10,10 +16,13 @@ const defaultsProp: IdefaultsProp = {
   viewportUnit: "vw", // 希望使用的视口单位
   fontViewportUnit: "vw", // 字体使用的视口单位
   minPixelValue: 1, // 设置最小的转换数值，如果为 1 的话，只有大于 1 的值会被转换
-  attributeList: []
+  attributeList: [], // 添加额外转换属性
+  include: [], // 包含哪些文件
+  exclude: []  // 排除哪些文件
 };
 
 
+// console.log('utils',utils.createFilter(['**/*.vue'],['node_modules/**/*']))
 
 
 // 转换函数
@@ -88,10 +97,16 @@ const dealAttributeList = (code, attributeList, customOptions) => {
 }
 
 function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
+  // @ts-ignore
+  if (typeof window !== "undefined") return console.warn('Please use it in node environment !!!')
   // 合并
   const copyDefaultsProp = Object.assign({}, defaultsProp)
   // 生成自定义
   customOptions = Object.assign(copyDefaultsProp, customOptions)
+
+  // 包含排除
+  const filter = utils.createFilter(customOptions.include,customOptions.exclude)
+
   try {
     // 异步写入文件
     fs.writeFileSync(process.cwd() + "/node_modules/vite-plugin-style-to-vw/dist/file.json", JSON.stringify(customOptions), 'utf8');
@@ -107,119 +122,121 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
     enforce: 'pre',
     // 构建阶段的通用钩子：在每个传入模块请求时被调用：在每个传入模块请求时被调用，主要是用来转换单个模块
     transform(code: any, id: any) {
-      if (/.vue$/.test(id)) {
-        let _source = ''
-        let _sourceCopy = ''
-        // template 模式
-        if (templateReg.test(code)) {
-          _source = code.match(templateReg)[0]
-          _sourceCopy = code.match(templateReg)[0]
-        } else if (code.includes('setup')) {
-          _source = code
-          _sourceCopy = code
-        }
-        if (replaceReg.test(_source)) {
-
-          const styleMatches = _source.match(replaceReg) as string[]
-
-          if (styleMatches?.length) {
-            // 遍历每个 style 属性值,替换 px 为 vw
-            const newStyleValues: string[] = []
-            for (let i = 0; i < styleMatches.length; i++) {
-              const styleValue = styleMatches[i]
-              const newStyleValue = styleValue.replace(pxGlobalReg, (match) => {
-                return match.replace(
-                  pxGlobalReg,
-                  createPxReplace(
-                    customOptions.viewportWidth as number,
-                    customOptions.minPixelValue  as number,
-                    customOptions.unitPrecision  as number,
-                    customOptions.viewportUnit as string,
-                  ),
-                )
-              })
-              newStyleValues.push(newStyleValue)
-            }
-            // 将新的 style 属性值替换回原始字符串
-            let newStr = _source
-            for (let i = 0; i < styleMatches.length; i++) {
-              newStr = newStr.replace(styleMatches[i], `${newStyleValues[i]}`)
-            }
-            code = code.replace(_sourceCopy, newStr)
-          }
-
-        }
-        if (!isAllReplace) {
-          // 处理属性列表
-          code = dealAttributeList(code, customOptions.attributeList, customOptions)
-        }
-
-      } else if (/\.tsx|\.jsx$/.test(id)) {
-        let _source = code
-        let _sourceCopy = code
-        // 匹配style
-        if (replaceReg.test(_source)) {
-          const styleMatches = _source.match(replaceReg) as string[]
-          if (styleMatches?.length) {
-            // 遍历每个 style 属性值,替换 px 为 vw
-            const newStyleValues: string[] = []
-            for (let i = 0; i < styleMatches.length; i++) {
-              const styleValue = styleMatches[i]
-              const newStyleValue = styleValue.replace(pxGlobalReg, (match) => {
-                return match.replace(
-                  pxGlobalReg,
-                  createPxReplace(
-                    customOptions.viewportWidth as number,
-                    customOptions.minPixelValue  as number,
-                    customOptions.unitPrecision  as number,
-                    customOptions.viewportUnit as string,
-                  ),
-                )
-              })
-              newStyleValues.push(newStyleValue)
-            }
-            // 将新的 style 属性值替换回原始字符串
-            let newStr = _source
-            for (let i = 0; i < styleMatches.length; i++) {
-              newStr = newStr.replace(styleMatches[i], `${newStyleValues[i]}`)
-            }
-            code = code.replace(_sourceCopy, newStr)
-            _sourceCopy = code
+      if (filter(id)) {
+        if (/.vue$/.test(id)) {
+          let _source = ''
+          let _sourceCopy = ''
+          // template 模式
+          if (templateReg.test(code)) {
+            _source = code.match(templateReg)[0]
+            _sourceCopy = code.match(templateReg)[0]
+          } else if (code.includes('setup')) {
             _source = code
+            _sourceCopy = code
           }
-        }
-        // 处理属性列表
-        if (!isAllReplace) {
+          if (replaceReg.test(_source)) {
+
+            const styleMatches = _source.match(replaceReg) as string[]
+
+            if (styleMatches?.length) {
+              // 遍历每个 style 属性值,替换 px 为 vw
+              const newStyleValues: string[] = []
+              for (let i = 0; i < styleMatches.length; i++) {
+                const styleValue = styleMatches[i]
+                const newStyleValue = styleValue.replace(pxGlobalReg, (match) => {
+                  return match.replace(
+                    pxGlobalReg,
+                    createPxReplace(
+                      customOptions.viewportWidth as number,
+                      customOptions.minPixelValue as number,
+                      customOptions.unitPrecision as number,
+                      customOptions.viewportUnit as string,
+                    ),
+                  )
+                })
+                newStyleValues.push(newStyleValue)
+              }
+              // 将新的 style 属性值替换回原始字符串
+              let newStr = _source
+              for (let i = 0; i < styleMatches.length; i++) {
+                newStr = newStr.replace(styleMatches[i], `${newStyleValues[i]}`)
+              }
+              code = code.replace(_sourceCopy, newStr)
+            }
+
+          }
+          if (!isAllReplace) {
+            // 处理属性列表
+            code = dealAttributeList(code, customOptions.attributeList, customOptions)
+          }
+
+        } else if (/\.tsx|\.jsx$/.test(id)) {
+          let _source = code
+          let _sourceCopy = code
+          // 匹配style
+          if (replaceReg.test(_source)) {
+            const styleMatches = _source.match(replaceReg) as string[]
+            if (styleMatches?.length) {
+              // 遍历每个 style 属性值,替换 px 为 vw
+              const newStyleValues: string[] = []
+              for (let i = 0; i < styleMatches.length; i++) {
+                const styleValue = styleMatches[i]
+                const newStyleValue = styleValue.replace(pxGlobalReg, (match) => {
+                  return match.replace(
+                    pxGlobalReg,
+                    createPxReplace(
+                      customOptions.viewportWidth as number,
+                      customOptions.minPixelValue as number,
+                      customOptions.unitPrecision as number,
+                      customOptions.viewportUnit as string,
+                    ),
+                  )
+                })
+                newStyleValues.push(newStyleValue)
+              }
+              // 将新的 style 属性值替换回原始字符串
+              let newStr = _source
+              for (let i = 0; i < styleMatches.length; i++) {
+                newStr = newStr.replace(styleMatches[i], `${newStyleValues[i]}`)
+              }
+              code = code.replace(_sourceCopy, newStr)
+              _sourceCopy = code
+              _source = code
+            }
+          }
           // 处理属性列表
-          code = dealAttributeList(code, customOptions.attributeList, customOptions)
-        }
-        // react 设置important
-        if (styleSetPropertyReg.test(_source)) {
-          const styleMatches = _source.match(styleSetPropertyReg) as string[]
-          if (styleMatches?.length) {
-            // 遍历每个 style 属性值,替换 px 为 vw
-            const newStyleValues: string[] = []
-            for (let i = 0; i < styleMatches.length; i++) {
-              const styleValue = styleMatches[i]
-              const newStyleValue = styleValue.replace(pxGlobalReg, (match) => {
-                return match.replace(
-                  pxGlobalReg,
-                  createPxReplace(
-                    customOptions.viewportWidth as number,
-                    customOptions.minPixelValue  as number,
-                    customOptions.unitPrecision  as number,
-                    customOptions.viewportUnit as string,
-                  ),
-                )
-              })
-              newStyleValues.push(newStyleValue)
+          if (!isAllReplace) {
+            // 处理属性列表
+            code = dealAttributeList(code, customOptions.attributeList, customOptions)
+          }
+          // react 设置important
+          if (styleSetPropertyReg.test(_source)) {
+            const styleMatches = _source.match(styleSetPropertyReg) as string[]
+            if (styleMatches?.length) {
+              // 遍历每个 style 属性值,替换 px 为 vw
+              const newStyleValues: string[] = []
+              for (let i = 0; i < styleMatches.length; i++) {
+                const styleValue = styleMatches[i]
+                const newStyleValue = styleValue.replace(pxGlobalReg, (match) => {
+                  return match.replace(
+                    pxGlobalReg,
+                    createPxReplace(
+                      customOptions.viewportWidth as number,
+                      customOptions.minPixelValue as number,
+                      customOptions.unitPrecision as number,
+                      customOptions.viewportUnit as string,
+                    ),
+                  )
+                })
+                newStyleValues.push(newStyleValue)
+              }
+              // 将新的 style 属性值替换回原始字符串
+              let newStr = _source
+              for (let i = 0; i < styleMatches.length; i++) {
+                newStr = newStr.replace(styleMatches[i], `${newStyleValues[i]}`)
+              }
+              code = code.replace(code, newStr)
             }
-            // 将新的 style 属性值替换回原始字符串
-            let newStr = _source
-            for (let i = 0; i < styleMatches.length; i++) {
-              newStr = newStr.replace(styleMatches[i], `${newStyleValues[i]}`)
-            }
-            code = code.replace(code, newStr)
           }
         }
       }
@@ -260,8 +277,8 @@ export const stylePxToVw = (code: string | number, customOptions: IdefaultsProp 
         /(\d+)/g,
         createPxReplace(
           customOptions.viewportWidth as number,
-          customOptions.minPixelValue  as number,
-          customOptions.unitPrecision  as number,
+          customOptions.minPixelValue as number,
+          customOptions.unitPrecision as number,
           ''
         ),
       )
@@ -278,8 +295,8 @@ export const stylePxToVw = (code: string | number, customOptions: IdefaultsProp 
         pxGlobalReg,
         createPxReplace(
           customOptions.viewportWidth as number,
-          customOptions.minPixelValue  as number,
-          customOptions.unitPrecision  as number,
+          customOptions.minPixelValue as number,
+          customOptions.unitPrecision as number,
           customOptions.viewportUnit as string,
         ),
       )

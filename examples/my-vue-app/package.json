@@ -9,12 +9,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "vant": "^4.9.3",
     "vue": "^3.3.4"
   },
   "devDependencies": {
+    "@vant/auto-import-resolver": "^1.2.1",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "typescript": "^5.0.2",
+    "unplugin-auto-import": "^0.18.2",
+    "unplugin-vue-components": "^0.27.3",
     "vite": "^4.4.5",
     "vite-plugin-style-to-vw": "^1.0.0",
     "vite-plugin-style-vw-loader": "^1.0.7",

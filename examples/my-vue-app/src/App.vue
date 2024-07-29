@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.tsx'
 import A from './components/a.vue'
+import B from './components/b.vue'
 import { stylePxToVw } from '../../../src/index'
 
 console.log("stylePxToVw('300px')",stylePxToVw('300px',{
@@ -24,8 +25,10 @@ console.log("stylePxToVw('300px')",stylePxToVw('300px',{
   :style="{fontSize:'28px',marginTop: '10px'}">
 Test</h3>
   </div>
+  <van-button>vant</van-button>
   <HelloWorld msg="tsx" />
   <A size="100px"/>
+  <B />
 </template>
 
 <style scoped>

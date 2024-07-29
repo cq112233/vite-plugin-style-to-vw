@@ -49,6 +49,7 @@
   "author": "cq",
   "license": "MIT",
   "devDependencies": {
+    "@rollup/pluginutils": "^5.1.0",
     "@types/node": "^18.14.0",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.53.0",
@@ -62,5 +63,8 @@
   },
   "bugs": {
     "url": "https://github.com/cq112233/vite-plugin-style-to-vw/issues"
+  },
+  "dependencies": {
+    "pluginutils": "link:@types/@rollup/pluginutils"
   }
 }

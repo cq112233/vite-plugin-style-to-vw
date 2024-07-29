@@ -9,6 +9,8 @@ interface IdefaultsProp {
   fontViewportUnit?: string,
   minPixelValue?: number,
   attributeList?:string[],
+  include: string | RegExp | (string | RegExp)[],
+  exclude: string | RegExp | (string | RegExp)[]
 }
 
 declare function vitePluginStyleToVw(options?:IdefaultsProp):Plugin
