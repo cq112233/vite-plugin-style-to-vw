@@ -57,6 +57,8 @@ export default defineConfig({
         fontViewportUnit: "vw",
         minPixelValue: 1,
         attributeList:[] ,
+        include:[], 
+        exclude: [], 
   }), vue()],
 });
 ```
@@ -234,5 +236,7 @@ console.log(d) // 13vw
     fontViewportUnit: "vw", // 字体使用的视口单位
     minPixelValue: 1, // 设置最小的转换数值，如果为 1 的话，只有大于 1 的值会被转换
     attributeList:[] , // allReplace 为 false使用, ['width','size','height']
+    include:[], // 包含某些文件夹下的文件或特定文件，例如 'node_modules' 下的文件
+    exclude: [], // 忽略某些文件夹下的文件或特定文件，例如 'node_modules' 下的文件
 }
 ```
