@@ -16,8 +16,8 @@ export default defineConfig({
     attributeList:[
       'width','height','size'
     ],
-    // include:[],
-    exclude: [/\App.vue/], // 需要排除的文件
+    // include:[/\App.vue/],
+    // exclude: [/\App.vue/], // 需要排除的文件
   })
   , vue(),vueJsx(), AutoImport({
     resolvers: [VantResolver()],
