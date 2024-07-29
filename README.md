@@ -220,7 +220,7 @@ console.log(d) // 13vw
     fontViewportUnit: "vw", // Viewport units used by fonts.
     minPixelValue: 1, // Set the minimum conversion value. If it is 1, only values greater than 1 will be converted.
     attributeList:[] , // allReplace is false, ['width','size','height']
-    include:[], 
-    exclude: [], 
+    include:[], // Contains files under certain folders or specific files, such as files under 'node_modules'
+    exclude: [], // Ignore files under certain folders or specific files, such as files under 'node_modules'
 }
 ```
