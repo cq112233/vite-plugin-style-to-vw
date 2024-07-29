@@ -1,13 +1,11 @@
 import type { IdefaultsProp } from './index.d'
 import fs from 'fs'
-import utils from '@rollup/pluginutils'
-// let utils
-// // @ts-ignore
-// if (typeof window === "undefined") {
-//   utils = await import('@rollup/pluginutils')
-//   utils = utils.default
-//   console.log('utils',utils)
-// }
+// import util  from '@rollup/pluginutils'
+let utils
+// @ts-ignore
+if (typeof window === "undefined") {
+  utils = await import('rollup-pluginutils')
+}
 
 // 默认参数
 const defaultsProp: IdefaultsProp = {
@@ -49,9 +47,7 @@ function createPxReplace(
     return toFixed((pixels / viewportSize) * 100, unitPrecision) + viewportUnit;
   };
 }
-
-
-// let extraOptions = defaultsProp
+let extraOptions = defaultsProp
 const templateReg = /<template>([\s\S]+)<\/template>/gi;
 const pxGlobalReg = /(\d+)px/g;
 const styleRegex = /style\s*(:|=)\s*(?:"([^"]*?)"|'([^']*?)'|{([^}]*)})/g;
@@ -258,52 +254,52 @@ function vitePluginStyleToVw(customOptions: IdefaultsProp = defaultsProp) {
 export default vitePluginStyleToVw;
 
 // @ts-ignore
-// if (typeof window !== "undefined") {
-//   try {
-//     // 读取文件，node端生成合并的配置,
-//     // ts忽略下文
-//     // @ts-ignore
-//     const json = await import('/node_modules/vite-plugin-style-to-vw/dist/file.json')
-//     extraOptions = json.default
-//   } catch (error) {
-//   }
-// }
+if (typeof window !== "undefined") {
+  try {
+    // 读取文件，node端生成合并的配置,
+    // ts忽略下文
+    // @ts-ignore
+    const json = await import('/node_modules/vite-plugin-style-to-vw/dist/file.json')
+    extraOptions = json.default
+  } catch (error) {
+  }
+}
 
 
-// // 手动转换成vw 100 ==> 13.33333 '100px' ==> '13.33333px
-// export const stylePxToVw = (code: string | number, customOptions: IdefaultsProp = {}) => {
-//   const copyExtraOptions = Object.assign({}, extraOptions)
-//   customOptions = Object.assign(copyExtraOptions, customOptions)
-//   if (typeof code === 'number' || (typeof Number(code) === 'number' && !isNaN(Number(code
-//   )))) {
-//     const returnCode = code.toString().replace(/(\d+)/g, (match) => {
-//       return match.replace(
-//         /(\d+)/g,
-//         createPxReplace(
-//           customOptions.viewportWidth as number,
-//           customOptions.minPixelValue as number,
-//           customOptions.unitPrecision as number,
-//           ''
-//         ),
-//       )
+// 手动转换成vw 100 ==> 13.33333 '100px' ==> '13.33333px
+export const stylePxToVw = (code: string | number, customOptions: IdefaultsProp = {}) => {
+  const copyExtraOptions = Object.assign({}, extraOptions)
+  customOptions = Object.assign(copyExtraOptions, customOptions)
+  if (typeof code === 'number' || (typeof Number(code) === 'number' && !isNaN(Number(code
+  )))) {
+    const returnCode = code.toString().replace(/(\d+)/g, (match) => {
+      return match.replace(
+        /(\d+)/g,
+        createPxReplace(
+          customOptions.viewportWidth as number,
+          customOptions.minPixelValue as number,
+          customOptions.unitPrecision as number,
+          ''
+        ),
+      )
 
-//     })
-//     if (typeof code === 'number') {
-//       return Number(returnCode)
-//     } else {
-//       return returnCode
-//     }
-//   } else {
-//     return code.toString().replace(pxGlobalReg, (match) => {
-//       return match.replace(
-//         pxGlobalReg,
-//         createPxReplace(
-//           customOptions.viewportWidth as number,
-//           customOptions.minPixelValue as number,
-//           customOptions.unitPrecision as number,
-//           customOptions.viewportUnit as string,
-//         ),
-//       )
-//     })
-//   }
-// }
+    })
+    if (typeof code === 'number') {
+      return Number(returnCode)
+    } else {
+      return returnCode
+    }
+  } else {
+    return code.toString().replace(pxGlobalReg, (match) => {
+      return match.replace(
+        pxGlobalReg,
+        createPxReplace(
+          customOptions.viewportWidth as number,
+          customOptions.minPixelValue as number,
+          customOptions.unitPrecision as number,
+          customOptions.viewportUnit as string,
+        ),
+      )
+    })
+  }
+}
