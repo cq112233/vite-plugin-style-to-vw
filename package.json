@@ -7,11 +7,17 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
-    }
+    },
+    "./util": {
+      "types": "./dist/util.d.ts",
+      "import":"./dist/util.mjs"
+    } 
   },
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsup src/index.ts --dts --format esm --minify --outDir dist",
+    "build": "npm run build:index && npm run build:util",
+    "build:index":"tsup src/index.ts --dts --format esm --minify --outDir dist",
+    "build:util":"tsup src/util.ts --dts --format esm --minify --outDir dist",
     "test:vue": "cd examples/my-vue-app && pnpm i && pnpm run dev",
     "test:react": "cd examples/my-react-app && pnpm i && pnpm run dev"
   },

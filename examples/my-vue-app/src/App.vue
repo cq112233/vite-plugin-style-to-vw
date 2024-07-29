@@ -2,7 +2,7 @@
 import HelloWorld from './components/HelloWorld.tsx'
 import A from './components/a.vue'
 import B from './components/b.vue'
-import { stylePxToVw } from '../../../src/index'
+import { stylePxToVw } from '../../../src/util'
 
 console.log("stylePxToVw('300px')",stylePxToVw('300px',{
 // viewportWidth:750
